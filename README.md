@@ -25,9 +25,21 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 
 ## Project Setup
 
+First install dependencies:
+
 ```sh
 npm install
 ```
+
+Before running the app you must create an environment file. Copy the example template and fill in any required values:
+
+```sh
+cp .env.example .env
+```
+
+(Windows PowerShell users can run `Copy-Item .env.example .env`.)
+
+After the `.env` file is in place the usual scripts work as shown below.
 
 ### Compile and Hot-Reload for Development
 
@@ -46,3 +58,24 @@ npm run build
 ```sh
 npm run lint
 ```
+
+---
+
+## Running in a Container
+
+A Dockerfile is included to build the app as a static site and serve it with nginx.
+
+1. Ensure `.env` exists (see above) and contains any required variables.
+2. Build the image:
+
+```sh
+docker build -t weather-app .
+```
+
+3. Run a container, mapping port 80 to your host:
+
+```sh
+docker run --rm -p 8080:80 weather-app
+```
+
+You can then open http://localhost:8080 in your browser. For production you can push the image to a registry or customize the nginx configuration as needed.
