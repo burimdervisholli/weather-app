@@ -60,8 +60,8 @@ async function searchOptions(q: string) {
 </script>
 
 <template>
-  <div class="card row items-center justify-between q-mb-lg">
-    <div class="col q-pr-md">
+  <div class="card row items-center justify-between q-mb-lg gap-12">
+    <div class="col">
       <q-select
         filled
         v-model="location"
@@ -81,7 +81,7 @@ async function searchOptions(q: string) {
       </q-select>
     </div>
 
-    <q-btn-group>
+    <q-btn-group class="q-mx-md">
       <q-btn :outline="units !== 'metric'" color="primary" label="°C" @click="units = 'metric'" />
       <q-btn
         :outline="units !== 'imperial'"
@@ -90,5 +90,7 @@ async function searchOptions(q: string) {
         @click="units = 'imperial'"
       />
     </q-btn-group>
+
+    <q-btn outline color="primary" icon="refresh" @click="weatherStore.updateData()" />
   </div>
 </template>

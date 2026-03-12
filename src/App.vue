@@ -9,6 +9,7 @@ import Placeholder from '@/components/Placeholder.vue'
 const weatherStore = useWeatherStore()
 
 const weather = computed(() => weatherStore.weather ?? null)
+const loading = computed(() => weatherStore.loadingForecast || weatherStore.loadingWeather)
 </script>
 
 <template>
@@ -23,6 +24,9 @@ const weather = computed(() => weatherStore.weather ?? null)
           <Forecast />
         </template>
       </div>
+    </div>
+    <div v-if="loading" class="loading-overlay">
+      <q-spinner color="white" size="50px" />
     </div>
   </div>
 </template>
@@ -43,5 +47,17 @@ const weather = computed(() => weatherStore.weather ?? null)
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
