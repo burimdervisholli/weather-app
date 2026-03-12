@@ -15,8 +15,7 @@ import './app.scss'
 const app = createApp(App)
 
 app.use(createPinia())
-app.use(Quasar, {
-  extras: ['material-icons'],
-})
+// extras are handled via the imported CSS above, so no options are required
+app.use(Quasar)
 
 app.mount('#app')
