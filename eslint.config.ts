@@ -22,5 +22,13 @@ export default defineConfigWithVueTs(
 
   ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),
 
+  // allow some single-word components during development
+  rules: {
+    // vue enforces multi-word component names by default; disable for a few common names
+    'vue/multi-word-component-names': ['error', {
+      ignores: ['App', 'Placeholder', 'Forecast', 'Weather', 'SearchLocation'],
+    }],
+  },
+
   skipFormatting,
 )
