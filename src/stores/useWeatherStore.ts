@@ -77,7 +77,7 @@ export const useWeatherStore = defineStore('weather', {
         speed: state.units === 'metric' ? 'km/h' : 'mph',
       }
     },
-    icon: (state) => {
+    icon: () => {
       return (weather: { icon: string }[] | null) => {
         const icon = weather?.[0]?.icon
         return icon ? `https://openweathermap.org/img/wn/${icon}@2x.png` : '01d'
