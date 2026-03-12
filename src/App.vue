@@ -1,34 +1,47 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { useAxios } from '@/composables/useAxios'
+import { computed } from 'vue'
+import { useWeatherStore } from '@/stores/useWeatherStore'
+import SearchLocation from '@/components/SearchLocation.vue'
+import Weather from '@/components/Weather.vue'
+import Forecast from '@/components/Forecast.vue'
+import Placeholder from '@/components/Placeholder.vue'
 
-const axiosInstance = useAxios()
+const weatherStore = useWeatherStore()
 
-const apiKey = import.meta.env.VITE_API_KEY
-
-onMounted(async () => {
-  try {
-    const response = await axiosInstance.get('/weather', {
-      params: {
-        q: 'Pristina',
-        units: 'metric',
-      },
-    })
-    console.log('Weather data:', response.data)
-  } catch (error) {
-    console.error('Error fetching weather data:', error)
-  }
-})
+const weather = computed(() => weatherStore.weather ?? null)
 </script>
 
 <template>
-  <div>
-    <QBtn color="primary" label="Hello World" />
-    {{ apiKey }}
-    <h1>You did it! <q-badge color="secondary"> #4D96F2 </q-badge></h1>
-    <p>
-      Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-      documentation
-    </p>
+  <div class="weather-page">
+    <div class="container">
+      <div class="main">
+        <SearchLocation />
+
+        <Placeholder v-if="!weather" />
+        <template v-else>
+          <Weather />
+          <Forecast />
+        </template>
+      </div>
+    </div>
   </div>
 </template>
+
+<style lang="scss">
+.weather-page {
+  background: linear-gradient(180deg, #0289ff 0%, #00d8fe 100%);
+  min-height: 100vh;
+  padding: 40px 16px;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+</style>
